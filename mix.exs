@@ -25,6 +25,7 @@ defmodule EctoHomoiconicEnum.Mixfile do
   ] end
 
   defp package do [
+    maintainers: ["Michael Williams"],
     contributors: ["Michael Williams", "Gabriel Jaldon"],
     licenses: ["MIT"],
     links: %{github: "https://github.com/meetwalter/ecto_homoiconic_enum"},
