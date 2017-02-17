@@ -1,0 +1,30 @@
+#
+# Sublime Text 2/3
+#
+
+*.sublime-*
+
+#
+# Erlang and Elixir
+#
+
+erl_crash.dump
+*.ez
+
+# Ignore dependencies.
+_deps/
+
+# Ignore build artifacts and releases.
+_build/
+_rel/
+
+# Ignore documentation.
+doc/
+
+#
+# Misc
+#
+
+Thumbs.db
+{D,d}esktop.ini
+.DS_Store
