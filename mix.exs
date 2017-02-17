@@ -1,43 +1,43 @@
-defmodule EctoEnum.Mixfile do
+defmodule EctoHomoiconicEnum.Mixfile do
   use Mix.Project
 
-  @version "0.4.0"
+  @version "0.1.0"
 
   def project do [
-    app: :ecto_enum,
+    app: :ecto_homoiconic_enum,
 
-    name: "EctoEnum",
-    description: "Adds support for enumerated types to Ecto.",
+    name: "EctoHomoiconicEnum",
+    description: "Adds support for enumerated types to Ecto. Unlike ecto_enum, these enums assume the database will take and return the enum's values by their string representations.",
     version: @version,
-    elixir: "~> 1.2",
-    package: package,
+    elixir: "~> 1.4",
+    package: package(),
 
     docs: [
       source_ref: "#{@version}",
-      source_url: "https://github.com/mtwilliams/ecto_enum"
+      source_url: "https://github.com/meetwalter/ecto_homoiconic_enum"
     ],
 
     build_path: "_build",
     deps_path: "_deps",
     test_paths: ["test"],
 
-    deps: deps
+    deps: deps()
   ] end
 
   defp package do
-    [contributors: ["Gabriel Jaldon"],
+    [contributors: ["Michael Williams", "Gabriel Jaldon"],
      licenses: ["MIT"],
-     links: %{github: "https://github.com/mtwilliams/ecto_enum"},
+     links: %{github: "https://github.com/meetwalter/ecto_homoiconic_enum"},
      files: ~w(mix.exs README.md CHANGELOG.md lib)]
   end
 
   def application do
-    [applications: [:logger, :ecto]]
+    [extra_applications: [:logger]]
   end
 
   defp deps do
-    [{:ecto, "~> 2.0"},
-     {:postgrex, "~> 0.11", optional: true},
+    [{:ecto, "~> 2.1"},
+     {:postgrex, "~> 0.13", optional: true},
      {:ex_doc, "~> 0.11", only: :docs},
      {:earmark, "~> 0.1", only: :docs},
      {:inch_ex, ">= 0.0.0", only: :docs}]

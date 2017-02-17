@@ -1,5 +1,5 @@
 # TODO(mtwilliams): Support `pg_enum`.
 
-defmodule EctoEnum.Postgres do
+defmodule EctoHomoiconicEnum.Postgres do
   @moduledoc false
 end

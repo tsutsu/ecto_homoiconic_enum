@@ -1,11 +1,11 @@
 # TODO(mtwilliams): Test string backed enums more thoroughly.
 
-defmodule EctoEnumTest do
+defmodule EctoHomoiconicEnum.TestSuite do
   use ExUnit.Case
 
   import Ecto.Changeset
 
-  import EctoEnum, only: [defenum: 2]
+  import EctoHomoiconicEnum, only: [defenum: 2]
 
   defenum StatusEnum, registered: 0, active: 1, inactive: 2, archived: 3
   # defenum RoleEnum, ~w(user moderator administrator)a
@@ -57,18 +57,21 @@ defmodule EctoEnumTest do
   end
 
   test "casts binary to atom" do
-    %{changes: changes} = cast(%User{}, %{"status" => "active"}, ~w(status), [])
+    %{changes: changes} = cast(%User{}, %{"status" => "active"}, ~w(status))
     assert changes.status == :active
 
-    %{changes: changes} = cast(%User{}, %{"status" => :inactive}, ~w(status), [])
+    %{changes: changes} = cast(%User{}, %{"status" => :inactive}, ~w(status))
     assert changes.status == :inactive
   end
 
   test "fails when input is an integer" do
-    error = {:status, {"is invalid", [type: EctoEnumTest.StatusEnum]}}
+    expected_error = {"is invalid", [
+      type: EctoHomoiconicEnum.TestSuite.StatusEnum,
+      validation: :cast
+    ]}
 
-    changeset = cast(%User{}, %{"status" => 4}, ~w(status), [])
-    assert error in changeset.errors
+    changeset = cast(%User{}, %{"status" => 4}, ~w(status))
+    assert changeset.errors[:status] == expected_error
 
     assert_raise Ecto.ChangeError, fn ->
       TestRepo.insert!(%User{status: 5})
@@ -76,13 +79,16 @@ defmodule EctoEnumTest do
   end
 
   test "fails when input is not a member" do
-    error = {:status, {"is invalid", [type: EctoEnumTest.StatusEnum]}}
+    expected_error = {"is invalid", [
+      type: EctoHomoiconicEnum.TestSuite.StatusEnum,
+      validation: :cast
+    ]}
 
-    changeset = cast(%User{}, %{"status" => "retroactive"}, ~w(status), [])
-    assert error in changeset.errors
+    changeset = cast(%User{}, %{"status" => "retroactive"}, ~w(status))
+    assert changeset.errors[:status] == expected_error
 
-    changeset = cast(%User{}, %{"status" => :retroactive}, ~w(status), [])
-    assert error in changeset.errors
+    changeset = cast(%User{}, %{"status" => :retroactive}, ~w(status))
+    assert changeset.errors[:status] == expected_error
 
     assert_raise Ecto.ChangeError, fn ->
       TestRepo.insert!(%User{status: "retroactive"})
@@ -107,15 +113,15 @@ defmodule EctoEnumTest do
   end
 
   test "defenum/2 raises conflicting type errors" do
-    assert_raise EctoEnum.ConflictingTypesError, fn ->
+    assert_raise EctoHomoiconicEnum.ConflictingTypesError, fn ->
       defenum TestEnum, active: 1, inactive: 2, archived: "archived"
     end
 
-    assert_raise EctoEnum.ConflictingTypesError, fn ->
+    assert_raise EctoHomoiconicEnum.ConflictingTypesError, fn ->
       defenum TestEnum, active: "active", inactive: "inactive", archived: 3
     end
 
-    assert_raise EctoEnum.ConflictingTypesError, fn ->
+    assert_raise EctoHomoiconicEnum.ConflictingTypesError, fn ->
       defenum TestEnum, active: 1, inactive: "inactive"
     end
   end

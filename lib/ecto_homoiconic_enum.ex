@@ -1,8 +1,8 @@
-defmodule EctoEnum do
+defmodule EctoHomoiconicEnum do
   @moduledoc """
   Support for defining enumerated types.
 
-  See `EctoEnum.defenum/2` for usage.
+  See `EctoHomoiconicEnum.defenum/2` for usage.
   """
 
   defmodule ConflictingTypesError do
@@ -67,7 +67,7 @@ defmodule EctoEnum do
 
   It can be used like any other `Ecto.Type`:
 
-      import EctoEnum, only: [defenum: 2]
+      import EctoHomoiconicEnum, only: [defenum: 2]
       defenum User.Status, active: 1, inactive: 2, archived: 3
 
       defmodule User do
@@ -119,12 +119,12 @@ defmodule EctoEnum do
     quote do
       list_or_mapping = Macro.escape(unquote(list_or_mapping))
 
-      storage = EctoEnum.storage(list_or_mapping)
+      storage = EctoHomoiconicEnum.storage(list_or_mapping)
 
       if storage in [:indeterminate],
-        do: raise EctoEnum.ConflictingTypesError, {unquote(module), list_or_mapping}
+        do: raise EctoHomoiconicEnum.ConflictingTypesError, {unquote(module), list_or_mapping}
 
-      {member_to_internal, internal_to_member} = EctoEnum.mapping(list_or_mapping)
+      {member_to_internal, internal_to_member} = EctoHomoiconicEnum.mapping(list_or_mapping)
 
       members = Map.keys(member_to_internal)
       internals = Map.values(member_to_internal)
@@ -187,7 +187,7 @@ defmodule EctoEnum do
       Enum.all?(list_or_mapping, &is_binary/1) ->
         {Enum.map(list_or_mapping, &Atom.to_string/1), list_or_mapping}
       true ->
-        {Dict.keys(list_or_mapping), Dict.values(list_or_mapping)}
+        {Keyword.keys(list_or_mapping), Keyword.values(list_or_mapping)}
     end
 
     {Enum.zip(members, internal) |> Map.new,
