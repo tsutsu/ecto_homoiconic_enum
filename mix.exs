@@ -24,22 +24,22 @@ defmodule EctoHomoiconicEnum.Mixfile do
     deps: deps()
   ] end
 
-  defp package do
-    [contributors: ["Michael Williams", "Gabriel Jaldon"],
-     licenses: ["MIT"],
-     links: %{github: "https://github.com/meetwalter/ecto_homoiconic_enum"},
-     files: ~w(mix.exs README.md CHANGELOG.md lib)]
-  end
+  defp package do [
+    contributors: ["Michael Williams", "Gabriel Jaldon"],
+    licenses: ["MIT"],
+    links: %{github: "https://github.com/meetwalter/ecto_homoiconic_enum"},
+    files: ~w(mix.exs README.md CHANGELOG.md lib)
+  ] end
 
-  def application do
-    [extra_applications: [:logger]]
-  end
+  def application do [
+    extra_applications: [:logger]
+  ] end
 
-  defp deps do
-    [{:ecto, "~> 2.1"},
-     {:postgrex, "~> 0.13", optional: true},
-     {:ex_doc, "~> 0.11", only: :docs},
-     {:earmark, "~> 0.1", only: :docs},
-     {:inch_ex, ">= 0.0.0", only: :docs}]
-  end
+  defp deps do [
+    {:ecto, "~> 2.1"},
+    {:postgrex, "~> 0.13", optional: true},
+    {:ex_doc, "~> 0.11", only: :docs},
+    {:earmark, "~> 0.1", only: :docs},
+    {:inch_ex, ">= 0.0.0", only: :docs}
+  ] end
 end
