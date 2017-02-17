@@ -39,8 +39,6 @@ defmodule EctoHomoiconicEnum.Mixfile do
   defp deps do [
     {:ecto, "~> 2.1"},
     {:postgrex, "~> 0.13", optional: true},
-    {:ex_doc, "~> 0.11", only: :docs},
-    {:earmark, "~> 0.1", only: :docs},
-    {:inch_ex, ">= 0.0.0", only: :docs}
+    {:ex_doc, ">= 0.0.0", only: :dev}
   ] end
 end
