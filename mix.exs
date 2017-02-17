@@ -28,7 +28,7 @@ defmodule EctoHomoiconicEnum.Mixfile do
     contributors: ["Michael Williams", "Gabriel Jaldon"],
     licenses: ["MIT"],
     links: %{github: "https://github.com/meetwalter/ecto_homoiconic_enum"},
-    files: ~w(mix.exs README.md CHANGELOG.md lib)
+    files: ~w(mix.exs README.md lib)
   ] end
 
   def application do [
