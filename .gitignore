@@ -12,7 +12,7 @@ erl_crash.dump
 *.ez
 
 # Ignore dependencies.
-_deps/
+deps/
 
 # Ignore build artifacts and releases.
 _build/

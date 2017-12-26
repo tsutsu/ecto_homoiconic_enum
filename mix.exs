@@ -1,43 +1,36 @@
 defmodule EctoHomoiconicEnum.Mixfile do
   use Mix.Project
 
-  @version "0.1.1"
+  @version File.read!("VERSION") |> String.trim
 
-  def project do [
+  @description """
+    Adds support for enumerated types to Ecto. Unlike ecto_enum, these enums assume the database will take and return the enum's values by their string representations.
+  """
+
+  def project, do: [
     app: :ecto_homoiconic_enum,
-
-    name: "EctoHomoiconicEnum",
-    description: "Adds support for enumerated types to Ecto. Unlike ecto_enum, these enums assume the database will take and return the enum's values by their string representations.",
     version: @version,
-    elixir: "~> 1.4",
-    package: package(),
+    elixir: "~> 1.5",
+    description: @description,
+    consolidate_protocols: not Mix.env in [:dev, :test],
+    deps: deps(),
+    package: package()
+  ]
 
-    docs: [
-      source_ref: "#{@version}",
-      source_url: "https://github.com/meetwalter/ecto_homoiconic_enum"
-    ],
-
-    build_path: "_build",
-    deps_path: "_deps",
-    test_paths: ["test"],
-
-    deps: deps()
-  ] end
-
-  defp package do [
-    maintainers: ["Michael Williams"],
-    contributors: ["Michael Williams", "Gabriel Jaldon"],
-    licenses: ["MIT"],
-    links: %{github: "https://github.com/meetwalter/ecto_homoiconic_enum"},
-    files: ~w(mix.exs README.md lib)
-  ] end
-
-  def application do [
+  def application, do: [
     extra_applications: [:logger]
-  ] end
+  ]
+
+  defp package, do: [
+    maintainers: ["Levi Aul"],
+    contributors: ["Levi Aul", "Michael Williams", "Gabriel Jaldon"],
+    licenses: ["MIT"],
+    links: %{github: "https://github.com/tsutsu/ecto_homoiconic_enum"},
+    files: ~w(mix.exs lib README.md VERSION)
+  ]
 
   defp deps do [
-    {:ecto, "~> 2.1"},
+    {:ecto, "~> 2.2"},
     {:postgrex, "~> 0.13", optional: true},
     {:ex_doc, ">= 0.0.0", only: :dev}
   ] end
