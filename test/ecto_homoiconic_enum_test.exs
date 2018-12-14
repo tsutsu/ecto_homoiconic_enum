@@ -7,9 +7,9 @@ defmodule EctoHomoiconicEnum.TestSuite do
 
   import EctoHomoiconicEnum, only: [defenum: 2]
 
-  defenum StatusEnum, registered: 0, active: 1, inactive: 2, archived: 3
-  # defenum RoleEnum, ~w(user moderator administrator)a
-  defenum RoleEnum, [:user, :moderator, :administrator]
+  @status_mapping [registered: 0, active: 1, inactive: 2, archived: 3]
+  defenum StatusEnum, @status_mapping
+  defenum RoleEnum, ~w(user moderator administrator)a
 
   defmodule User do
     use Ecto.Schema

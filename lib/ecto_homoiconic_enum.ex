@@ -115,9 +115,12 @@ defmodule EctoHomoiconicEnum do
       iex> User.Status.__mappings__()
       [active: 1, inactive: 2, archived: 3]
   """
-  defmacro defenum(module, list_or_mapping) when is_list(list_or_mapping) do
+  defmacro defenum(module, list_or_mapping) do
     quote do
       list_or_mapping = Macro.escape(unquote(list_or_mapping))
+
+      unless is_list(list_or_mapping),
+        do: raise("Expected #{inspect(list_or_mapping)} to be a list or mapping.")
 
       storage = EctoHomoiconicEnum.storage(list_or_mapping)
 
