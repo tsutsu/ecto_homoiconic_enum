@@ -114,8 +114,28 @@ defmodule EctoHomoiconicEnum do
       [:active, :inactive, :archived]
       iex> User.Status.__mappings__()
       [active: 1, inactive: 2, archived: 3]
+
+  For static type checking with tools such as dialyzer, you can access a type
+  containing the list of all valid enum values with the `t()` type. For example:
+
+      import EctoHomoiconicEnum, only: [defenum: 2]
+      defenum MyEnum, [:a, :b, :c]
+
+      # There is now an automatically generated type in the MyEnum module
+      # of the form:
+      # @type t() :: :a | :b | :c
+
+      @spec my_fun(MyEnum.t()) :: boolean()
+      def my_fun(_v), do: true
   """
   defmacro defenum(module, list_or_mapping) when is_list(list_or_mapping) do
+    typespec = Enum.reduce(list_or_mapping, [],
+      fn a, acc when is_atom(a) or is_binary(a) -> add_type(a, acc)
+         {a, _}, acc when is_atom(a) -> add_type(a, acc)
+         _, acc -> acc
+      end
+    )
+
     quote do
       list_or_mapping = Macro.escape(unquote(list_or_mapping))
 
@@ -139,6 +159,8 @@ defmodule EctoHomoiconicEnum do
 
         @member_to_internal member_to_internal
         @internal_to_member internal_to_member
+
+        @type t :: unquote(typespec)
 
         def type, do: @storage
 
@@ -193,4 +215,6 @@ defmodule EctoHomoiconicEnum do
     {Enum.zip(members, internal) |> Map.new,
      Enum.zip(internal, members) |> Map.new}
   end
+
+  defp add_type(type, acc), do: {:|, [], [acc, type]}
 end
